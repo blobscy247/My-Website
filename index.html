@@ -1,12 +1,109 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
+    <title>API Call Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="password"] {
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        .response {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    
+    <header>
+        <h1>API Call Page</h1>
+    </header>
+    <div class="container">
+        <form id="apiForm">
+            <label for="apiUrl">API URL:</label>
+            <input type="text" id="apiUrl" required>
+            <label for="apiKey">API Key:</label>
+            <input type="password" id="apiKey" required>
+            <label for="Method">Method:</label>
+            <input type="text" id="apiKey" required>
+            <!-- Other input fields for API parameters can be added here -->
+            <button type="submit">Make API Call</button>
+        </form>
+        <div class="response">
+            <!-- API response will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('apiForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const apiUrl = document.getElementById('apiUrl').value;
+            const apiKey = document.getElementById('apiKey').value;
+            const method = document.getElementById('method').value;
+            // You can retrieve other input values here and include them in your API request
+
+            // Use JavaScript's fetch API to make the API call
+            fetch(apiUrl, {
+                method: '${method}', // Change to the appropriate HTTP method
+                headers: {
+                    //'Authorization': `Bearer ${apiKey}`,
+                    // Add any other headers required by your API
+                },
+                // You can include a request body for POST or other methods
+            })
+            .then(response => response.json()) // Assuming the response is in JSON format
+            .then(data => {
+                const responseElement = document.querySelector('.response');
+                responseElement.innerHTML = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
 </body>
 </html>
